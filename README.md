@@ -1,4 +1,4 @@
-﻿# unreduxed
+# unreduxed
 
 > a library to never think about re-rendering of React components ever again
 
