@@ -1,0 +1,46 @@
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.search {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 500px;
+  height: 45px;
+  padding: 0 10px;
+  font-size: 16px;
+}
+
+.countries {
+  display: flex;
+  gap: 20px;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.country {
+  width: 260px;
+  box-shadow:0 1px 6px 0 rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  border-radius: 6px;
+}
+
+.countryFlag{
+  width: 100px;
+}

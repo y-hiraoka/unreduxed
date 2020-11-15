@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.countText {
+  font-size: 30px;
+}
+
+.countValue {
+  font-size: 100px;
+  margin-left: 20px;
+}
+
+.countButtons {
+  display: flex;
+  gap: 20px;
+}
+
+.countButton {
+  background: none;
+  border: 2px solid #111111;
+  border-radius: 6px;
+  padding: 15px 20px;
+  font-size: 20px;
+}
