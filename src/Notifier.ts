@@ -1,13 +1,15 @@
-type Listener<Value> = (value: Value) => void;
+type Listener<C> = (container: C) => void;
 
-export class Notifier<Value> {
-  private listeners: Listener<Value>[] = [];
+export class Notifier<C> {
+  private listeners: Listener<C>[] = [];
 
-  notify(value: Value) {
-    this.listeners.forEach(listener => listener(value));
+  constructor(public container: C) {}
+
+  notify() {
+    this.listeners.forEach(listener => listener(this.container));
   }
 
-  register(listener: Listener<Value>): boolean {
+  register(listener: Listener<C>): boolean {
     if (!this.listeners.includes(listener)) {
       this.listeners.push(listener);
       return true;
@@ -16,7 +18,7 @@ export class Notifier<Value> {
     }
   }
 
-  unregister(listener: Listener<Value>) {
+  unregister(listener: Listener<C>) {
     this.listeners = this.listeners.filter(item => item !== listener);
   }
 }
