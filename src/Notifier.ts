@@ -6,7 +6,9 @@ export class Notifier<C> {
   constructor(public container: C) {}
 
   notify() {
-    this.listeners.forEach(listener => listener(this.container));
+    for (let i = 0; i < this.listeners.length; i++) {
+      this.listeners[i](this.container);
+    }
   }
 
   register(listener: Listener<C>): boolean {
