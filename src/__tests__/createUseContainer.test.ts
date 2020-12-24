@@ -59,3 +59,11 @@ test("pass a comparer function", () => {
   act(() => notifier.notify());
   expect(renderCount).toBe(1);
 });
+
+test("Error occurs when unwrapped with Provider.", () => {
+  const emptyContext = React.createContext<React.ContextType<typeof context>>(EMPTY);
+  const useContainer = createUseContainer(emptyContext);
+  const { result } = renderHook(() => useContainer());
+
+  expect(result.error.message).toBe("Component must be wrapped with <ContainerProvider>");
+});
