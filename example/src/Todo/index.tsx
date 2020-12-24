@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import { Todo as ITodo, TodoProvider, useTodoContainer } from "./container";
-import styles from "./styles.module.css";
+import styles from "./styles.css";
 
 export const TodoApp: React.FC = () => {
   return (

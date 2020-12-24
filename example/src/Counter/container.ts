@@ -1,5 +1,5 @@
 import React from "react";
-import unreduxed from "unreduxed";
+import unreduxed from "../../../src";
 
 const useCounter = () => {
   const [count, setCount] = React.useState(0);

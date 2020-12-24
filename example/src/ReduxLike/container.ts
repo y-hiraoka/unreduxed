@@ -1,6 +1,6 @@
 import React from "react";
-import unreduxed from "unreduxed";
 import { Country } from "./country";
+import unreduxed from "../../../src";
 
 type State = {
   text: string;

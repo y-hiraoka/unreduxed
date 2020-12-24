@@ -3,7 +3,7 @@ import { Link, Route, Switch } from "react-router-dom";
 import { Counter } from "./Counter";
 import { ReduxLike } from "./ReduxLike";
 import { TodoApp } from "./Todo";
-import styles from "./App.module.css";
+import styles from "./App.css";
 
 function App() {
   return (

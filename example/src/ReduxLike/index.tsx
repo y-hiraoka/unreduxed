@@ -1,7 +1,7 @@
 import React from "react";
 import { ContainerProvider, useSelector, useDispatch } from "./container";
 import { Country as ICountry } from "./country";
-import styles from "./styles.module.css";
+import styles from "./styles.css";
 
 export const ReduxLike: React.FC = () => {
   return (

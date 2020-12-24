@@ -1,7 +1,7 @@
 import React from "react";
 import { ContainerProvider, useContainer } from "./container";
 import { randomlyGetColor } from "../utils/randomlyGetColor";
-import styles from "./styles.module.css";
+import styles from "./styles.css";
 
 export const Counter: React.FC = () => {
   return (
