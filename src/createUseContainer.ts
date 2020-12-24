@@ -21,10 +21,15 @@ export function createUseContainer<Container>(
       throw new Error("Component must be wrapped with <ContainerProvider>");
     }
 
+    const selectorRef = React.useRef(selector);
+    selectorRef.current = selector;
+
     const forceUpdate = useForceUpdate();
     const prevSelectedValueRef = React.useRef<T>(selector(notifier.container));
+    prevSelectedValueRef.current = selectorRef.current(notifier.container);
 
     const listenerRef = React.useRef((value: Container) => {
+      const selector = selectorRef.current;
       const nextSelectedValue = selector(value);
 
       if (!comparer(prevSelectedValueRef.current, nextSelectedValue)) {
