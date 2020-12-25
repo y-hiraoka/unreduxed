@@ -31,7 +31,7 @@ test("select a value from container", () => {
 test("selector depends on a local state.", () => {
   const { result } = renderHook(() => {
     const [index, setIndex] = React.useState(0);
-    const selected = useContainer(c => c[index]);
+    const selected = useContainer(c => c[index], [index]);
 
     return { selected, index, setIndex };
   });
@@ -51,6 +51,7 @@ test("pass a comparer function", () => {
 
     useContainer(
       c => c.slice(), // create a copied instance.
+      [],
       (prev, next) => prev.every((item, index) => next[index] === item),
     );
   });

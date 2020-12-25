@@ -10,10 +10,12 @@ export function createUseContainer<Container>(
   function useContainer(): Container;
   function useContainer<T>(
     selector: (container: Container) => T,
+    selectorDeps?: React.DependencyList,
     comparer?: (prev: T, next: T) => boolean,
   ): T;
   function useContainer<T>(
     selector: (container: Container) => T = defaultSelector,
+    selectorDeps: React.DependencyList = [],
     comparer: (prev: T, next: T) => boolean = defaultComparer,
   ): T {
     const notifier = React.useContext(notifierContext);
@@ -21,33 +23,32 @@ export function createUseContainer<Container>(
       throw new Error("Component must be wrapped with <ContainerProvider>");
     }
 
-    const selectorRef = React.useRef(selector);
-    selectorRef.current = selector;
+    const memoizedSelector = React.useCallback(selector, selectorDeps);
 
     const forceUpdate = useForceUpdate();
-    const prevSelectedValueRef = React.useRef<T>(selector(notifier.container));
-    prevSelectedValueRef.current = selectorRef.current(notifier.container);
+    const prevSelectedValue = React.useMemo(() => memoizedSelector(notifier.container), [
+      memoizedSelector,
+      notifier.container,
+    ]);
 
-    const listenerRef = React.useRef((value: Container) => {
-      const selector = selectorRef.current;
-      const nextSelectedValue = selector(value);
+    const listener = React.useCallback(
+      (value: Container) => {
+        const nextSelectedValue = memoizedSelector(value);
 
-      if (!comparer(prevSelectedValueRef.current, nextSelectedValue)) {
-        prevSelectedValueRef.current = nextSelectedValue;
-
-        forceUpdate();
-      }
-    });
+        if (!comparer(prevSelectedValue, nextSelectedValue)) {
+          forceUpdate();
+        }
+      },
+      [memoizedSelector, prevSelectedValue, forceUpdate],
+    );
 
     useIsomorphicLayoutEffect(() => {
-      const listener = listenerRef.current;
-
       notifier.register(listener);
 
       return () => notifier.unregister(listener);
-    }, [notifier]);
+    }, [listener, notifier]);
 
-    return prevSelectedValueRef.current;
+    return prevSelectedValue;
   }
 
   return useContainer;
