@@ -1,8 +1,8 @@
 {
 	"name": "unreduxed",
 	"version": "1.0.0",
-	"main": "dist/index.js",
-	"module": "dist/index.m.js",
+	"main": "dist/index.cjs.js",
+	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"files": [
 		"dist"

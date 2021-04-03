@@ -15,7 +15,7 @@ export default [
   {
     input: "src/index.ts",
     output: {
-      file: "dist/index.m.js",
+      file: "dist/index.cjs.js",
       format: "cjs",
       exports: "default",
     },
