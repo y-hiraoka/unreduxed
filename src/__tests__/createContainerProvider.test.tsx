@@ -4,7 +4,7 @@ import { EMPTY } from "../empty";
 import { Notifier } from "../Notifier";
 import { renderHook, act } from "@testing-library/react-hooks";
 
-const useTestHook = (init?: number) => {
+const useTestHook = ({ init }: { init: number }) => {
   const [count, setCount] = React.useState(init ?? 0);
 
   const increment = React.useCallback(() => setCount(prev => prev + 1), []);
@@ -44,7 +44,7 @@ test("ContainerProvider provides Notifier instance", () => {
 
 test("Pass a initial state to ContainerProvider", () => {
   const PassingInitStateProvder = (props: { children: React.ReactNode }) => (
-    <ContainerProvider {...props} initialState={100} />
+    <ContainerProvider {...props} init={100} />
   );
 
   const { result } = renderHook(
@@ -66,7 +66,7 @@ test("Pass a mocked container to ContainerProvider", () => {
   };
 
   const PassingMockedProvider = (props: { children: React.ReactNode }) => (
-    <ContainerProvider {...props} mock={mock} />
+    <ContainerProvider {...props} __mock={mock} />
   );
 
   const { result } = renderHook(

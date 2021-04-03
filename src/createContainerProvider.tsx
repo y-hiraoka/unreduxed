@@ -3,17 +3,24 @@ import { EMPTY } from "./empty";
 import { Notifier } from "./Notifier";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 
-type ContainerProviderProps<I, C> = ({ mock: C } | { initialState?: I }) & {
-  children: React.ReactNode;
-};
+type ContainerProviderProps<HookArgs extends Record<string, any>, Container> = (
+  | (HookArgs & { __mock?: undefined })
+  | ({ __mock: Container } & { [K in keyof HookArgs]?: undefined })
+) & { children: React.ReactNode };
 
-export function createContainerProvider<Init, Container>(
-  useHook: (initialState?: Init) => Container,
+export function createContainerProvider<HookArgs extends Record<string, any>, Container>(
+  useHook: (args: HookArgs) => Container,
   notifierContext: React.Context<Notifier<Container> | typeof EMPTY>,
 ) {
-  const ContainerProvider: React.FC<ContainerProviderProps<Init, Container>> = props => {
+  const ContainerProvider: React.FC<ContainerProviderProps<
+    HookArgs,
+    Container
+  >> = props => {
+    const { children, ...others } = props;
+
+    // @ts-expect-error
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const container = "mock" in props ? props.mock : useHook(props.initialState);
+    const container: Container = "__mock" in others ? others.__mock : useHook(others);
 
     const notifierRef = React.useRef(new Notifier<Container>(container));
 
@@ -24,7 +31,7 @@ export function createContainerProvider<Init, Container>(
 
     return (
       <notifierContext.Provider value={notifierRef.current}>
-        {props.children}
+        {children}
       </notifierContext.Provider>
     );
   };

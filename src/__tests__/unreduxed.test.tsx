@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 import { unreduxed } from "../unreduxed";
 
-const useTestHook = (init?: number) => {
+const useTestHook = ({ init }: { init?: number }) => {
   const [count, setCount] = React.useState(init ?? 0);
 
   const increment = React.useCallback(() => setCount(prev => prev + 1), []);
